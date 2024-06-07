@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥tinder</title>
+    <link rel="stylesheet" href="../static/output.css">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"> -->
+</head>
+
+<body style="background-image: url('../static/bg.jpg');"
+    class="overflow-hidden bg-fixed bg-no-repeat bg-center bg-cover">
+
+    <div class="w-screen top-0 left-0 h-screen absolute flex -z-10" style="background-color: rgba(0, 0, 0, 0.6);">
+
+    </div>
+
+    <h1 class="text-[30px] bg-background text-primary z-10 font-sharetechmono">
+        🔥tinder for reviews
+    </h1>
+
+    <div class="z-10 flex w-full h-screen text-center place-items-center items-center justify-center">
+        <div class="border-[4px] relative rounded-lg border-background p-8 md:w-[50%] w-[80%] text-left">
+            <h1 class="text-[40px] text-center font-bold text-primary font-sharetechmono">
+                LOGIN
+            </h1>
+
+            <div class="w-full h-full flex absolute top-0 left-0 -z-10" style="background-color: rgba(0, 0, 0, 0.3);">
+
+            </div>
+
+            <form method="post" action="/login" >
+                <div class="login-div">
+                    <p class="login-p">
+                        USERNAME
+                    </p>
+                    <input name="username" id="username" class="login-input" type="username">
+                </div>
+                <div class="login-div">
+                    <p class="login-p">
+                        PASSWORD
+                    </p>
+                    <input name="password" id="password" class="login-input" type="password">
+                </div>
+                <div class="w-full">
+                    <button type="submit" class="w-full my-3 bg-background text-primary p-2 rounded-lg font-sharetechmono">
+                        LOGIN
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+    <script>
+        // see if cookie "token exists."
+        // if it does, redirect to /home
+
+        if(document.cookie.includes("token=")){
+            window.location.href = "/";
+        }
+    </script>
+
+</body>
+
+</html>

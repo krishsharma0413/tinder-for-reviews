@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+npx tailwindcss -i static/input.css -o static/output.css --watch
+*/
+
+@layer base {
+    @font-face {
+        font-family: "Share Tech Mono", monospace;
+        font-weight: 400;
+        font-style: normal;
+        src: url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+    }
+}
+
+.login-div {
+    @apply py-3;
+}
+
+.login-p {
+    @apply text-[25px] font-sharetechmono font-bold text-primary;
+}
+
+.login-input {
+    @apply w-full font-sharetechmono font-bold py-2 px-3 rounded-lg border border-gray-300;
+}
+
+body,
+html {
+    @apply max-h-full min-h-full;
+}
+
+.tinder--cards {
+    flex-grow: 1;
+    /* padding-top: 40px; */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 100;
+}
+
+.tinder--card {
+    display: flex;
+    padding-bottom: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: absolute;
+    will-change: transform;
+    transition: all 0.3s ease-in-out;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+
+    align-items: center;
+}
+
+.moving.tinder--card {
+
+    transition: none;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+}
+
+.tinder--card h1 {
+    pointer-events: none;
+}
+
+.tinder--card div {
+    pointer-events: none;
+}
+
+.tinder--buttons {
+    z-index: 101;
+    flex: 0 0 100px;
+    text-align: center;
+    padding-bottom: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tinder--buttons button {
+    @apply p-1 mx-1 rounded-lg text-[30px] text-background font-bold font-sharetechmono;
+}
+
+.tinder--buttons button:focus {
+    outline: 0;
+}
+
+.tinder--buttons i {
+    font-size: 32px;
+    vertical-align: middle;
+}
