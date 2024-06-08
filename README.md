@@ -1,6 +1,7 @@
 # 🔥Tinder for Reviews
 
-Tired of labelling your dataset *the boring way*? Introducing **Tinder for Reviews**
+Tired of labelling your dataset *the boring way*? Introducing **Tinder for Reviews** 
+Now label your dataset as if you are scrolling on tinder!
 
 ## Demo
 
@@ -36,3 +37,5 @@ and open `http://localhost:8000` in your browser.
 - right swipes or green button = positive.
 - left swipe or red button = negative
 - white button "neu" = neutral
+
+`Usecase: You can use this to label your dataset for sentiment analysis, feedback analysis, etc in a fun way.`
