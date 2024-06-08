@@ -5,9 +5,10 @@ Tired of labelling your dataset *the boring way*? Introducing **Tinder for Revie
 ## Demo
 
 A demo of how the works.
-<video width="320" height="240" controls>
-  <source src="./static/2024-06-07_21-31-08.mov" type="video/mp4">
-</video>
+
+
+[![Watch the video](https://github.com/krishsharma0413/tinder-for-reviews/assets/77439837/7d9f1516-1e25-47bf-8ca1-263d343c02ab)](https://github.com/krishsharma0413/tinder-for-reviews/assets/77439837/c00c0036-6d48-4b45-893b-ad763cdc7a17)
+
 
 ## Installation
 
