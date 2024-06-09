@@ -1,4 +1,5 @@
 import sqlite3
+from hashlib import sha256
 from secrets import token_urlsafe
 
 DATABASE_PATH = './database/feedback.db'
