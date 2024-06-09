@@ -1,6 +1,6 @@
 # 🔥Tinder for Reviews
 
-Tired of labelling your dataset *the boring way*? Introducing **Tinder for Reviews** 
+Tired of labelling your dataset *the boring way*? Introducing **Tinder for Reviews**.
 Now label your dataset as if you are scrolling on tinder!
 
 ## Demo
