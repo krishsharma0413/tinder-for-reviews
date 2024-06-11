@@ -87,7 +87,7 @@ html {
 }
 
 .tinder--buttons button {
-    @apply p-1 mx-1 rounded-lg text-[30px] text-background font-bold font-sharetechmono;
+    @apply p-1 mx-1 rounded-lg text-[20px] md:text-[30px] text-background font-bold font-sharetechmono;
 }
 
 .tinder--buttons button:focus {

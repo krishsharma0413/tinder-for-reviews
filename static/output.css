@@ -572,20 +572,12 @@ video {
   position: relative;
 }
 
-.bottom-0 {
-  bottom: 0px;
-}
-
 .left-0 {
   left: 0px;
 }
 
 .left-\[5\%\] {
   left: 5%;
-}
-
-.right-0 {
-  right: 0px;
 }
 
 .top-0 {
@@ -621,11 +613,6 @@ video {
   height: 85%;
 }
 
-.h-fit {
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
 .h-full {
   height: 100%;
 }
@@ -640,11 +627,6 @@ video {
 
 .w-\[90\%\] {
   width: 90%;
-}
-
-.w-fit {
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .w-full {
@@ -703,11 +685,6 @@ video {
   background-color: rgb(22 22 24 / var(--tw-bg-opacity));
 }
 
-.bg-gray-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-
 .bg-primary {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -742,16 +719,6 @@ video {
   padding-right: 1rem;
 }
 
-.px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
 .text-left {
   text-align: left;
 }
@@ -766,10 +733,6 @@ video {
 
 .text-\[20px\] {
   font-size: 20px;
-}
-
-.text-\[25px\] {
-  font-size: 25px;
 }
 
 .text-\[30px\] {
@@ -880,10 +843,16 @@ html {
   border-radius: 0.5rem;
   padding: 0.25rem;
   font-family: Share Tech Mono, monospace;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
   --tw-text-opacity: 1;
   color: rgb(22 22 24 / var(--tw-text-opacity));
+}
+
+@media (min-width: 768px) {
+  .tinder--buttons button {
+    font-size: 30px;
+  }
 }
 
 .tinder--buttons button:focus {
@@ -902,16 +871,6 @@ html {
 
   .md\:w-\[50\%\] {
     width: 50%;
-  }
-
-  .md\:px-10 {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
-
-  .md\:py-5 {
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
   }
 
   .md\:text-\[30px\] {
