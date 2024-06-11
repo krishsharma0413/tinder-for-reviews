@@ -210,6 +210,11 @@ function createButtonListener(love) {
   };
 }
 
+function toggleSettings() {
+  var settings = document.getElementById("settings-dialog");
+  settings.classList.toggle("hidden");
+}
+
 var nopeListener = createButtonListener(-1);
 var loveListener = createButtonListener(1);
 var neuListener = createButtonListener(0);

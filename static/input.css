@@ -87,7 +87,7 @@ html {
 }
 
 .tinder--buttons button {
-    @apply p-1 mx-1 rounded-lg text-[30px] text-background font-bold font-sharetechmono;
+    @apply p-1 mx-1 rounded-lg text-[20px] md:text-[30px] text-background font-bold font-sharetechmono;
 }
 
 .tinder--buttons button:focus {
@@ -97,4 +97,8 @@ html {
 .tinder--buttons i {
     font-size: 32px;
     vertical-align: middle;
+}
+
+.settings{
+    @apply w-full text-primary hover:bg-primary hover:text-background m-1 py-1 border-2 text-[20px];
 }
