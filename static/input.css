@@ -98,3 +98,7 @@ html {
     font-size: 32px;
     vertical-align: middle;
 }
+
+.settings{
+    @apply w-full text-primary hover:bg-primary hover:text-background m-1 py-1 border-2 text-[20px];
+}
