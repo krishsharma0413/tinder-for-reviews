@@ -6,6 +6,8 @@ var nope = document.getElementById('nope');
 var love = document.getElementById('love');
 var neu = document.getElementById('neu');
 var cardcontainer = document.querySelector(".tinder--cards");
+var lastid = null;
+var lastdecision = null;
 
 var sampleCard = `<div data-id="${0}"
     class="tinder--card border-[4px] md:top-[10%] lg:left-[25%] top-[5%] left-[5%] rounded-lg border-background h-[85%] p-8 lg:w-[50%] w-[90%] text-center">
@@ -29,10 +31,27 @@ function decision(chosen, id) {
     .then(data => {
       console.log(data);
       if (data.status == 200) {
-        fetch_cards();
+        lastid = id;
+        lastdecision = chosen;
+        // fetch_cards();
       }
     })
   console.log(chosen, id);
+}
+
+function undoCard(){
+  toggleSettings();
+  if(lastid == null) return;
+  fetch('/undo-review?id=' + lastid + '&decision=' + lastdecision)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if (data.status == 200) {
+        lastid = null;
+        
+      }
+    })
+
 }
 
 function fetch_cards() {
