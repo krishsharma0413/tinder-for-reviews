@@ -6,6 +6,8 @@ var nope = document.getElementById('nope');
 var love = document.getElementById('love');
 var neu = document.getElementById('neu');
 var cardcontainer = document.querySelector(".tinder--cards");
+var lastid = null;
+var lastdecision = null;
 
 var sampleCard = `<div data-id="${0}"
     class="tinder--card border-[4px] md:top-[10%] lg:left-[25%] top-[5%] left-[5%] rounded-lg border-background h-[85%] p-8 lg:w-[50%] w-[90%] text-center">
@@ -28,11 +30,33 @@ function decision(chosen, id) {
     .then(response => response.json())
     .then(data => {
       console.log(data);
-      if (data.status == 200) {
-        fetch_cards();
+      if (data.message == "Approved") {
+        lastid = id;
+        lastdecision = chosen;
+        // fetch_cards();
+        }
+        })
+  console.log(chosen, id);
+}
+
+function undoCard(){
+  toggleSettings();
+  var moveOutWidth = document.body.clientWidth;
+  if(lastid == null) return;
+  fetch('/undo-review?db_id=' + lastid + '&polarity=' + lastdecision)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if (data.message == "done") {
+        var card = document.getElementById(lastid);
+        console.log(card);
+        card.style.transform = 'translate(0px, 0px) rotate(0deg)';
+        card.classList.remove('removed');
+        initCards();
+        lastid = null;
       }
     })
-  console.log(chosen, id);
+
 }
 
 function fetch_cards() {
@@ -43,7 +67,7 @@ function fetch_cards() {
       cardcontainer.innerHTML = '';
       for (var i = 0; i < data.data.length; i++) {
         cardcontainer.innerHTML += `
-          <div data-id="${data.data[i][0]}"
+          <div id="${data.data[i][0]}" data-id="${data.data[i][0]}"
             class="tinder--card border-[4px] md:top-[10%] lg:left-[25%] top-[5%] left-[5%] rounded-lg border-background h-[85%] p-8 lg:w-[50%] w-[90%] text-center">
             <div class="w-full h-full flex absolute top-0 left-0 -z-10"
               style="background-image: url(../static/tinder.jpg); background-position: center; background-repeat: no-repeat; background-attachment:fixed; background-size: cover;">
@@ -208,6 +232,11 @@ function createButtonListener(love) {
 
     event.preventDefault();
   };
+}
+
+function toggleSettings() {
+  var settings = document.getElementById("settings-dialog");
+  settings.classList.toggle("hidden");
 }
 
 var nopeListener = createButtonListener(-1);

@@ -96,6 +96,41 @@ async def get_reviews(request: fastapi.Request):
     else:
         return JSONResponse({"message": "Unauthorized"})
 
+@app.get("/undo-review", response_class=JSONResponse)
+async def undo_review(request: fastapi.Request, db_id: str, polarity: int):
+    if request.cookies.get("token", None):
+        res = cursor.execute("SELECT * FROM users WHERE token = ?",
+                             (request.cookies.get("token"),)).fetchone()
+        if res:
+            res = cursor.execute(
+                "SELECT * FROM feedback WHERE id = ?", (db_id,)).fetchone()
+            if res:
+                factor = 0
+                if polarity == 1:
+                    cursor.execute(
+                        "UPDATE feedback SET positive = ? WHERE id = ?", (res[2]-1, db_id))
+                    factor = -1
+                elif polarity == -1:
+                    cursor.execute(
+                        "UPDATE feedback SET negative = ? WHERE id = ?", (res[3]+1, db_id))
+                    factor = 1
+                elif polarity == 0:
+                    cursor.execute(
+                            "UPDATE feedback SET negative = ? WHERE id = ?", (res[4]-1, db_id))
+                    factor = 0
+                else:
+                    return JSONResponse({"message": "Invalid polarity"})
+                try:
+                    polarity = (res[2] + res[3] + factor) / \
+                        (res[2] - res[3] + res[4] - 1)
+                except ZeroDivisionError:
+                    polarity = 0
+                cursor.execute(
+                    "UPDATE feedback SET polarity = ? WHERE id = ?", (polarity, db_id))
+                cursor.connection.commit()
+                return JSONResponse({"message": "done"})
+    return JSONResponse({"message": "Unauthorized"})
+            
 
 @app.get("/approve-review", response_class=JSONResponse)
 async def approve_review(request: fastapi.Request, db_id: str, polarity: int):
@@ -106,19 +141,21 @@ async def approve_review(request: fastapi.Request, db_id: str, polarity: int):
             res = cursor.execute(
                 "SELECT * FROM feedback WHERE id = ?", (db_id,)).fetchone()
             if res:
+                factor = 0
                 if polarity == 1:
                     cursor.execute(
                         "UPDATE feedback SET positive = ? WHERE id = ?", (res[2]+1, db_id))
                     factor = 1
                 elif polarity == -1:
-                    factor = -1
                     cursor.execute(
                         "UPDATE feedback SET negative = ? WHERE id = ?", (res[3]-1, db_id))
+                    factor = -1
                 elif polarity == 0:
-                    factor = 0
                     cursor.execute(
                         "UPDATE feedback SET neutral = ? WHERE id = ?", (res[4]+1, db_id))
-
+                    factor = 0
+                else:
+                    return JSONResponse({"message": "Invalid polarity"})
                 # polarity = (positive - negative) / (positive + negative + neutral)
                 polarity = (res[2] + res[3] + factor) / \
                     (res[2] - res[3] + res[4] + 1)
@@ -126,4 +163,6 @@ async def approve_review(request: fastapi.Request, db_id: str, polarity: int):
                     "UPDATE feedback SET polarity = ? WHERE id = ?", (polarity, db_id))
                 cursor.connection.commit()
                 return JSONResponse({"message": "Approved"})
+            else:
+                return JSONResponse({"message": "Review not found"})
     return JSONResponse({"message": "Unauthorized"})

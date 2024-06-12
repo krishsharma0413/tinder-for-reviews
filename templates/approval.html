@@ -23,9 +23,18 @@
             🔥tinder for reviews
         </h1>
 
-        <a class="text-primary px-4 z-20 font-sharetechmono text-[20px]" href="/logout">
-            Log Out
-        </a>
+        <button onclick="toggleSettings();" class="text-primary px-4 z-20 font-sharetechmono text-[20px]">
+            Settings
+        </button>
+    </div>
+
+    <!-- a dialog box in the center of the screen -->
+    <div id="settings-dialog" class="hidden absolute z-50 rounded-lg border-4 p-8 border-background bg-background w-[80%] md:w-[50%] text-primary font-sharetechmono"  style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="w-full text-center">
+            <button onclick="undoCard()" class="settings">Undo</button>
+            <button class="settings">Export to JSON</button>
+            <button onclick="toggleSettings();" class="settings">Close</button>
+        </div>
     </div>
 
     <div class="tinder">
