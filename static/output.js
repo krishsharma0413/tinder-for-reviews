@@ -24,7 +24,7 @@ var sampleCard = `<div data-id="${0}"
 
 
 function decision(chosen, id) {
-  fetch('/approve-review?id=' + id + '&polarity=' + chosen)
+  fetch('/approve-review?db_id=' + id + '&polarity=' + chosen)
     .then(response => response.json())
     .then(data => {
       console.log(data);
