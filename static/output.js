@@ -39,8 +39,11 @@ function decision(chosen, id) {
   console.log(chosen, id);
 }
 
-function undoCard(){
-  toggleSettings();
+function undoCard(trigger){
+  
+  if (trigger)
+    toggleSettings();
+  
   var moveOutWidth = document.body.clientWidth;
   if(lastid == null) return;
   fetch('/undo-review?db_id=' + lastid + '&polarity=' + lastdecision)
@@ -246,3 +249,17 @@ var neuListener = createButtonListener(0);
 nope.addEventListener('click', nopeListener);
 love.addEventListener('click', loveListener);
 neu.addEventListener('click', neuListener);
+
+// add button listener like A, S, D, W
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'a' || event.key === 'ArrowLeft') {
+    nope.click();
+  } else if (event.key === 'd' || event.key === 'ArrowRight') {
+    love.click();
+  } else if (event.key === 'w' || event.key === 'ArrowUp') {
+    neu.click();
+  } else if (event.key === 's' || event.key === 'ArrowDown') {
+    undoCard(false);
+  }
+});
