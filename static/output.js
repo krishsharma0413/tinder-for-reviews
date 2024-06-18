@@ -24,6 +24,9 @@ var sampleCard = `<div data-id="${0}"
     </h1>
 </div>`;
 
+function jsonExport(){
+  window.location.href  = '/json-export';
+}
 
 function decision(chosen, id) {
   fetch('/approve-review?db_id=' + id + '&polarity=' + chosen)
