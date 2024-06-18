@@ -1,12 +1,17 @@
 from hashlib import sha256
 from typing import Annotated
+from zipfile import ZipFile, ZIP_DEFLATED
+from json import dump
+import os
+from shutil import rmtree
 
 import fastapi
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from config import cursor
+from user_config import headers
 
 app = fastapi.FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -81,6 +86,37 @@ async def logout(request: fastapi.Request):
     response.delete_cookie("token")
     return response
 
+
+@app.get("/json-export", response_class=FileResponse)
+async def json_exp(request: fastapi.Request):
+    if request.cookies.get("token", None):
+        res = cursor.execute("SELECT * FROM users WHERE token = ?",
+                             (request.cookies.get("token"),)).fetchone()
+        if res:
+            alldata = cursor.execute("SELECT * FROM feedback").fetchall()
+            with open(f"./exports/{res[2]}.zip", "w", encoding="utf-8") as _:
+                zipf = ZipFile(f"./exports/{res[2]}.zip", "w", ZIP_DEFLATED)
+                try:
+                    os.mkdir(f"./{res[2]}/")
+                except FileExistsError as _:
+                    print("directory already created: cleaning directory")
+                    rmtree(f"./{res[2]}/")
+                    os.mkdir(f"./{res[2]}/")
+                if len(alldata) > 15_000:
+                    print(len(alldata))
+                    for x in range(0, len(alldata), 15_000):
+                        with open(f"./{res[2]}/{x}-{x+15_000}.json", "w", encoding="utf-8") as filemanager:
+                            dump({"data": [dict(zip(headers, y)) for y in alldata[x:x+15_000]]}, filemanager, indent=4)
+                            filemanager.flush()
+                        zipf.write(f"./{res[2]}/{x}-{x+15_000}.json")
+                else:
+                    with open(f"./{res[2]}/{0}-{len(alldata)}.json", "w", encoding="utf-8") as filemanager:
+                        dump({"data": [dict(zip(headers, y)) for y in alldata]}, filemanager, indent=4)
+                        zipf.write(f"./{res[2]}/{0}-{len(alldata)}.json")
+                zipf.close()
+                return FileResponse(f"./exports/{res[2]}.zip")
+    else:
+        return JSONResponse({"message": "Unauthorized"})
 
 @app.get("/get-reviews", response_class=JSONResponse)
 async def get_reviews(request: fastapi.Request):
