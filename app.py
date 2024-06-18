@@ -114,7 +114,7 @@ async def json_exp(request: fastapi.Request):
                         dump({"data": [dict(zip(headers, y)) for y in alldata]}, filemanager, indent=4)
                         zipf.write(f"./{res[2]}/{0}-{len(alldata)}.json")
                 zipf.close()
-                return FileResponse(f"./exports/{res[2]}.zip")
+                return FileResponse(f"./exports/{res[2]}.zip", filename=f"{res[2]}.zip")
     else:
         return JSONResponse({"message": "Unauthorized"})
 
