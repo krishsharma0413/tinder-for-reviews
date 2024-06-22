@@ -7,6 +7,8 @@ For review_type = "image". Please make sure that it is TEXT data type
 and has either "relative path" of the images or BASE64 image data.
 """
 
+DATABASE_PATH = "./database/feedback.db" # this is an example database.
+
 # what all columns/headers does your sql data have?
 headers = ["id", "review_content", "positive",
            "negative", "neutral", "polarity"]
@@ -22,3 +24,6 @@ polarity_column = "polarity"
 left_swipe = ["negative", "negative"]
 up_swipe = ["neutral", "neu"]
 right_swipe = ["positive", "positive"]
+
+# A list of tuple which has username and then password
+login_password = [("admin", "admin"), ("krish", "secretpassword")]

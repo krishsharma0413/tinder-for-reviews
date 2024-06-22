@@ -18,10 +18,40 @@ pip install -r requirements.txt
 ```
 
 ## Setup
-1. line `33` in `app.py` creates a user with the username `admin` and password `admin`. Change this to your desired username and password.
-2. line `42` in `app.py` creates sample data for 10k reviews.
+1. Please save your `.db` database with it's name in `database` folder and go through `user_config.py` and setup your SQLite database accordingly.
 
-You can also use for feedback and postinformation tables yourself to add the data you like and configure the database.
+An example **SQLite database** with headers such as `["id", "review_content", "positive", "negative", "neutral", "polarity"]` would look like.
+
+```py
+"""
+author: krish sharma
+
+This file is to setup your tinder-for-reviews without much difficulties.
+
+For review_type = "image". Please make sure that it is TEXT data type
+and has either "relative path" of the images or BASE64 image data.
+"""
+
+DATABASE_PATH = "./database/feedback.db" # this is an example database.
+
+# what all columns/headers does your sql data have?
+headers = ["id", "review_content", "positive",
+           "negative", "neutral", "polarity"]
+
+
+# which column/header do you want to be shown on the review card?
+column_for_review = "review_content"
+review_type = "text" # options: "text" or "image" (support for videos soon)
+polarity_column = "polarity"
+
+# what does each swipe add value to? please make sure these columns are int
+# ["column name", "name showed on website buttons."]
+left_swipe = ["negative", "negative"]
+up_swipe = ["neutral", "neu"]
+right_swipe = ["positive", "positive"]
+```
+
+You can also use for feedback and postinformation tables yourself to add the data you like and configure this **example database**.
 ```sql
 INSERT INTO feedback (id, review_content, positive, negative, neutral, polarity) VALUES (?, ?, ?, ?, ?, ?)
 
@@ -34,8 +64,11 @@ python main.py
 ```
 and open `http://localhost:8000` in your browser.
 
-- right swipes or green button = positive.
-- left swipe or red button = negative
-- white button "neu" = neutral
+- right swipes or green button = positive*.
+- left swipe or red button = negative*.
+- white button "neu" = neutral*.
 
-`Usecase: You can use this to label your dataset for sentiment analysis, feedback analysis, etc in a fun way.`
+\*  or whatever you have configured in `user_config.py`
+## Usecase
+
+You can use this to label your dataset for sentiment analysis, feedback analysis, etc in a fun way. Well, that's what I am using this for :P
