@@ -28,6 +28,10 @@ function jsonExport(){
   window.location.href  = '/json-export';
 }
 
+function Logout(){
+  window.location.href  = '/logout';
+}
+
 function decision(chosen, id) {
   fetch('/approve-review?db_id=' + id + '&polarity=' + chosen)
     .then(response => response.json())
