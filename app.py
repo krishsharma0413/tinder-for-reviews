@@ -116,30 +116,30 @@ async def undo_review(request: fastapi.Request, db_id: str, polarity: int):
                              (request.cookies.get("token"),)).fetchone()
         if res:
             res = cursor.execute(
-                f"SELECT * FROM {table_name} WHERE id = ?", (db_id,)).fetchone()
+                f"SELECT {right_swipe[0]}, {left_swipe[0]}, {up_swipe[0]} FROM {table_name} WHERE id = ?", (db_id,)).fetchone()
             if res:
                 factor = 0
                 if polarity == 1:
                     cursor.execute(
-                        f"UPDATE {table_name} SET {right_swipe} = ? WHERE id = ?", (res[2]-1, db_id))
+                        f"UPDATE {table_name} SET {right_swipe[0]} = ? WHERE id = ?", (res[0]-1, db_id))
                     factor = -1
                 elif polarity == -1:
                     cursor.execute(
-                        f"UPDATE {table_name} SET {left_swipe} = ? WHERE id = ?", (res[3]+1, db_id))
+                        f"UPDATE {table_name} SET {left_swipe[0]} = ? WHERE id = ?", (res[1]+1, db_id))
                     factor = 1
                 elif polarity == 0:
                     cursor.execute(
-                        f"UPDATE {table_name} SET {left_swipe} = ? WHERE id = ?", (res[4]-1, db_id))
+                        f"UPDATE {table_name} SET {up_swipe[0]} = ? WHERE id = ?", (res[2]-1, db_id))
                     factor = 0
                 else:
                     return JSONResponse({"message": "Invalid polarity"})
                 try:
-                    polarity = (res[2] + res[3] + factor) / \
-                        (res[2] - res[3] + res[4] - 1)
+                    polarity = (res[0] + res[1] + factor) / \
+                        (res[0] - res[1] + res[2] - 1)
                 except ZeroDivisionError:
                     polarity = 0
                 cursor.execute(
-                    f"UPDATE {table_name} SET {polarity} = ? WHERE id = ?", (polarity, db_id))
+                    f"UPDATE {table_name} SET {polarity_column} = ? WHERE id = ?", (polarity, db_id))
                 cursor.connection.commit()
                 return JSONResponse({"message": "done"})
     return JSONResponse({"message": "Unauthorized"})
