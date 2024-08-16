@@ -33,6 +33,7 @@
         <div class="w-full text-center">
             <button onclick="undoCard(true)" class="settings">Undo</button>
             <button onclick="jsonExport()" class="settings">Export to JSON</button>
+            <button onclick="Logout();" class="settings">Log Out</button>
             <button onclick="toggleSettings();" class="settings">Close</button>
         </div>
     </div>
@@ -58,9 +59,9 @@
         </div>
 
         <div class="tinder--buttons">
-            <button class="bg-accentred" id="nope">Negative</button>
-            <button class="bg-primary" id="neu">Neu</button>
-            <button class="bg-accentgreen" id="love">Positive</button>
+            <button class="bg-accentred" id="nope">{{left}}</button>
+            <button class="bg-primary" id="neu">{{up}}</button>
+            <button class="bg-accentgreen" id="love">{{right}}</button>
         </div>
 
 

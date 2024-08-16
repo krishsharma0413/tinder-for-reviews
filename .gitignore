@@ -1,4 +1,7 @@
-/__pycache__/
+*/__pycache__/
+__pycache__/
 /node_modules/
 /venv/
-/database/feedback.db
+/database/*
+/exports/*
+.pytest_cache/
